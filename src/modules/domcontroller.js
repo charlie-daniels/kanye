@@ -10,12 +10,17 @@ function setNewQuote(target) {
   )
   .then((res) => res.json())
   .then((res) => target.textContent = res.quote)
+  .then(() => target.classList.add('switch', 'hidden'))
   .catch((err) => target.textContent = err)
 }
 
 function configureNextButton(button, container) {
-  button.addEventListener('click', (e) => {
-     setNewQuote(container);
+  button.addEventListener('click', () => {
+    container.classList.add('rolling');
+    setNewQuote(container);
+  })
+  button.addEventListener('transitionend', () => {
+    container.classList.remove('rolling', 'switch', 'hidden');
   })
 }
 

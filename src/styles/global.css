@@ -41,17 +41,23 @@ body {
 
 #content {
   height: 100%;
-  padding: 10px 40px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-q {
-  display: flex;
+#content q {
   font-style: italic;
   position: relative;
+  text-align: center;
+  transition: transform 1s ease;
+  font-size: 1.4rem;
+}
+
+a {
+  color: var(--font-color);
 }
 
 q::before {
@@ -70,4 +76,18 @@ header {
 footer {
   margin-top: auto;
   font-size: 0.5rem;
+}
+
+/* Animations */
+
+.rolling {
+  transform: translate(200vw);
+}
+
+.switch {
+  transform: translate(-400vw);
+}
+
+.hidden { 
+  visibility: hidden;
 }
