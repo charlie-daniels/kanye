@@ -3,24 +3,35 @@ function setMobileHeight() {
   document.documentElement.style.setProperty('--vh', `${vh}px`);
 }
 
-function setNewQuote(target) {
-  fetch(
-    'https://api.kanye.rest',
-    {method: 'GET', mode: 'cors'}
-  )
-  .then((res) => res.json())
-  .then((res) => target.textContent = res.quote)
-  .then(() => target.classList.add('switch', 'hidden'))
-  .catch((err) => target.textContent = err)
+async function requestNewQuote() {
+  try {
+    const res = await fetch(
+      'https://api.kanye.rest',
+      { method: 'GET', mode: 'cors' }
+    );
+    return await res.json();
+  } catch (err) {
+    return err;
+  }
+}
+
+function setNewQuote(container) {
+  const animationDelay = 1000;
+  const req = requestNewQuote();
+  req.then((res) => container.textContent = res.quote);
+  req.then(() => {
+    container.classList.add('switch', 'hidden');
+    container.style.transitionDelay = '1ms';
+    setTimeout(() => {
+      container.classList = '';
+    }, animationDelay)
+  })
 }
 
 function configureNextButton(button, container) {
   button.addEventListener('click', () => {
     container.classList.add('rolling');
     setNewQuote(container);
-  })
-  button.addEventListener('transitionend', () => {
-    container.classList.remove('rolling', 'switch', 'hidden');
   })
 }
 
