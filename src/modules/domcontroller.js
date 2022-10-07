@@ -4,34 +4,31 @@ function setMobileHeight() {
 }
 
 async function requestNewQuote() {
-  try {
-    const res = await fetch(
+  const req = new Promise((resolve) => {
+    resolve(fetch(
       'https://api.kanye.rest',
       { method: 'GET', mode: 'cors' }
-    );
-    return await res.json();
-  } catch (err) {
-    return err;
-  }
-}
-
-function setNewQuote(container) {
-  const animationDelay = 1000;
-  const req = requestNewQuote();
-  req.then((res) => container.textContent = res.quote);
-  req.then(() => {
-    container.classList.add('switch', 'hidden');
-    container.style.transitionDelay = '1ms';
-    setTimeout(() => {
-      container.classList = '';
-    }, animationDelay)
+    ))
   })
+  const quote = await req;
+  return quote;
 }
 
 function configureNextButton(button, container) {
+  const animationDelay = 600;
   button.addEventListener('click', () => {
     container.classList.add('rolling');
-    setNewQuote(container);
+    setTimeout(() => {
+      container.classList.add('switch', 'hidden');
+      container.classList.remove('transition');
+      requestNewQuote()
+        .then(res => res.json())
+        .then(res => {
+          container.textContent = res.quote;
+          container.classList = 'transition';
+        });
+    }, animationDelay);
+    
   })
 }
 

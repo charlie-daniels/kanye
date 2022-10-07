@@ -52,7 +52,6 @@ body {
   font-style: italic;
   position: relative;
   text-align: center;
-  transition: transform 1s ease;
   font-size: 1.4rem;
 }
 
@@ -81,13 +80,22 @@ footer {
 /* Animations */
 
 .rolling {
-  transform: translate(200vw);
+  transform: translate(100vw);
 }
 
 .switch {
-  transform: translate(-400vw);
+  transform: translate(-100vw);
 }
 
 .hidden { 
   visibility: hidden;
+}
+
+.loading {
+  width: 100px;
+  position: absolute;
+}
+
+.transition {
+  transition: transform 600ms ease-in-out;
 }
