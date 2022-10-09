@@ -4,14 +4,12 @@ function setMobileHeight() {
 }
 
 async function requestNewQuote() {
-  const req = new Promise((resolve) => {
-    resolve(fetch(
+  const quote = 
+    await fetch(
       'https://api.kanye.rest',
       { method: 'GET', mode: 'cors' }
-    ))
-  })
-  const quote = await req;
-  return quote;
+    );
+  return quote.json();
 }
 
 function configureNextButton(button, container) {
@@ -22,7 +20,6 @@ function configureNextButton(button, container) {
       container.classList.add('switch', 'hidden');
       container.classList.remove('transition');
       requestNewQuote()
-        .then(res => res.json())
         .then(res => {
           container.textContent = res.quote;
           container.classList = 'transition';
